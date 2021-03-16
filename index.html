@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; font-src 'self' https://fonts.gstatic.com/; style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline';">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+    <title>Dot plot</title>
+  </head>
+  <body>
+
+    <div class="page">
+      <div class="sidebar">
+        <div class="input-field col s6">
+          <input placeholder="ACGCGCG" id="Sequence1" type="text" class="validate">
+          <label for="Sequence1">Sequence 1</label>
+        </div>
+
+        <div class="input-field col s6">
+          <input placeholder="ACACGCA" id="Sequence2" type="text" class="validate">
+          <label for="Sequence2">Sequence 2</label>
+        </div>
+
+        <div class="input-field col s6">
+          <input placeholder="3" id="windowSize" type="text" class="validate">
+          <label for="windowSize">Window Size</label>
+        </div>
+
+        <div class="input-field col s6">
+          <input placeholder="2" id="threshold" type="text" class="validate">
+          <label for="threshold">Threshold</label>
+        </div>
+      
+        <div class="button-container">
+          <a id="plotData" class="waves-effect waves-light btn blue lighten-2">Plot data</a>
+        </div>
+        
+        <div class="button-container">
+          <a id="savePlot" class="waves-effect waves-light btn blue lighten-2">Save plot</a>
+        </div>
+      </div>
+
+      <div id="plot">
+       
+      </div>
+
+    </div>
+
+    <footer class="page-footer blue lighten-2">
+      <div class="footer-copyright">
+        <div class="container">
+        © 2021 Copyright Grzegorz Stefański
+        <a class="grey-text text-lighten-4 right" href="#!">https://github.com/GrzegorzStefanski</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- You can also require other files to run in this process -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
