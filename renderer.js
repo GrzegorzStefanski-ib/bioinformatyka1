@@ -5,52 +5,45 @@ var margin = {top: 30, right: 30, bottom: 30, left: 60},
     height = 460 - margin.top - margin.bottom;
 
   
-  var svg = d3.select("#plot")
-              .append("svg")
-              .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-  
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([0, 4000])
-    .range([ 0, width ]);
-  var xAxis = svg.append("g")
-    .call(d3.axisTop(x));
+var svg = d3.select("#plot")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // Add Y axis
-  var y = d3.scaleLinear()
-    .domain([0, 500000])
-    .range([ 0, height]);
-  var yAxis = svg.append("g")
-    .call(d3.axisLeft(y));
+// Add X axis
+var x = d3.scaleLinear()
+  .domain([0, 4000])
+  .range([ 0, width ]);
+var xAxis = svg.append("g")
+  .call(d3.axisTop(x));
 
-     // Customization
-     svg.selectAll(".tick line").attr("stroke", "#EBEBEB")
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 500000])
+  .range([ 0, height]);
 
-  // Add X axis label:
-  svg.append("text")
-      .attr("text-anchor", "end")
-      .attr("x", width / 2 + 50)
-      .attr("y", -20)
-      .text("Sequence 1");
+var yAxis = svg.append("g")
+  .call(d3.axisLeft(y));
+   // Customization
+   svg.selectAll(".tick line").attr("stroke", "#EBEBEB")
 
-  // Y axis label:
-  svg.append("text")
-      .attr("text-anchor", "end")
-      .attr("transform", "rotate(-90)")
-      .attr("y", -margin.left + 10)
-      .attr("x", -height / 2 + 20)
-      .text("Sequence 2")
+// Add X axis label:
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width / 2 + 50)
+    .attr("y", -20)
+    .text("Sequence 1");
 
-    //   svg.selectAll("circle")
-    //   .data([[0,0]]).enter()
-    //   .append("circle")
-    //   .attr("cx", function(d) {return d[0]})
-    //   .attr("cy", function(d) {return d[1]})
-    //   .attr("r", 4)
+// Y axis label:
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .attr("y", -margin.left + 10)
+    .attr("x", -height / 2 + 20)
+    .text("Sequence 2")
+
 
 // add the X gridlines
 let xGrid = svg.append("g")			
@@ -177,18 +170,6 @@ document.getElementById("plotData").addEventListener("click", () => {
                         .tickFormat("")
                     )
                 }
-                // var x = d3.scaleLinear()
-                //   .domain([0, data[1]])
-                //   .range([ 0, width ]);
-                // svg.append("g")
-                //   .call(d3.axisTop(x));
-
-                // var y = d3.scaleLinear()
-                //   .domain([0, data[0]])
-                //   .range([ 0, height]);
-                // svg.append("g")
-                //   .call(d3.axisLeft(y));
-    
             }
     
         }
