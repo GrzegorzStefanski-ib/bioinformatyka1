@@ -82,7 +82,6 @@ document.getElementById("plotData").addEventListener("click", () => {
     let windowSize = document.getElementById("windowSize").value;
     let threshold = document.getElementById("threshold").value;
 
-    console.log(seq2)
     if(seq2 != null && seq2.trim() != ""){
         args = [pyScript, seq1, seq2, windowSize, threshold];
     }
@@ -100,7 +99,6 @@ document.getElementById("plotData").addEventListener("click", () => {
 
     pythonProcess.on('close', () => {
 
-        console.log("Burger?")
     
         if (data === null){
             console.log("output of python script is empty")
@@ -109,7 +107,6 @@ document.getElementById("plotData").addEventListener("click", () => {
     
         else {
     
-            console.log(data)
             data = data.toString()
     
             data = data.match(/([\d.]+)/gm)
@@ -128,7 +125,6 @@ document.getElementById("plotData").addEventListener("click", () => {
               }
 
               let r = 4 / Math.floor(Math.max(data[0], data[1]) / 100)
-              console.log(r)
     
               svg.selectAll("circle").remove();
               svg.selectAll("circle")
@@ -197,9 +193,6 @@ document.getElementById("plotData").addEventListener("click", () => {
     
         }
 
-        points.forEach(point => {
-            console.log(point)
-        });
         console.log("done")
     
         
@@ -213,7 +206,6 @@ document.getElementById("savePlot").addEventListener("click", () => {
         filename: 'customFileName',
       }
     d3_save_svg.save(d3.select('svg').node(), config);
-    console.log(directory)
 })
 
 // gridlines in x axis function
