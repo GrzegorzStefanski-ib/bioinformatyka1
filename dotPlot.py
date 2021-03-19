@@ -120,14 +120,14 @@ class DotPlot:
                
                 if line[0] == ">":
                     if len(seq) != 0:
-                        sequences.append(seq)       
+                        sequences.append(seq.upper())       
                     seq = ""
             
                 else:
                     seq += line
         
         if len(seq) != 0:
-            sequences.append(seq)
+            sequences.append(seq.upper())
 
         if len(sequences) == 0:
             print("File: " + directory + " does not contain any sequence or is not in right format (.fasta).")
@@ -186,6 +186,7 @@ class DotPlot:
 
        for point in points:
            print(point)
+           sys.stdout.flush()
 
     def display_help(self):
         print("\nScript for creating dot plot from 2 sequences with threshold based sliding-window filtering.\n")
@@ -206,4 +207,5 @@ if __name__ == "__main__":
     dp = DotPlot( sys.argv[1:] )
     p = dp.dot_plot()
     dp.plot(p)
+
     

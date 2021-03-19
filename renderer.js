@@ -1,6 +1,6 @@
 d3 = window.d3;
 
-var margin = {top: 30, right: 30, bottom: 30, left: 60},
+var margin = {top: 50, right: 30, bottom: 30, left: 60},
     width = 530 - margin.left - margin.right,
     height = 460 - margin.top - margin.bottom;
 
@@ -14,14 +14,14 @@ var svg = d3.select("#plot")
 
 // Add X axis
 var x = d3.scaleLinear()
-  .domain([0, 4000])
+  .domain([0, 1000])
   .range([ 0, width ]);
 var xAxis = svg.append("g")
   .call(d3.axisTop(x));
 
 // Add Y axis
 var y = d3.scaleLinear()
-  .domain([0, 500000])
+  .domain([0, 1000])
   .range([ 0, height]);
 
 var yAxis = svg.append("g")
@@ -33,14 +33,14 @@ var yAxis = svg.append("g")
 svg.append("text")
     .attr("text-anchor", "end")
     .attr("x", width / 2 + 50)
-    .attr("y", -20)
+    .attr("y", -25)
     .text("Sequence 1");
 
 // Y axis label:
 svg.append("text")
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-90)")
-    .attr("y", -margin.left + 10)
+    .attr("y", -margin.left + 25)
     .attr("x", -height / 2 + 20)
     .text("Sequence 2")
 
@@ -65,7 +65,7 @@ let yGrid = svg.append("g")
 
 document.getElementById("plotData").addEventListener("click", () => {
 
-    let data;
+    let data = "";
     let args;
     let points = [];
 
@@ -76,23 +76,26 @@ document.getElementById("plotData").addEventListener("click", () => {
     let threshold = document.getElementById("threshold").value;
 
     if(seq2 != null && seq2.trim() != ""){
-        args = [pyScript, seq1, seq2, windowSize, threshold];
+        args = ['-u', pyScript, seq1, seq2, windowSize, threshold];
     }
     else{
-        args = [pyScript, seq1, windowSize, threshold];
+        args = ['-u', pyScript, seq1, windowSize, threshold];
     }
 
-    let pythonProcess = window.execFile('Python/python', args, (err, stdout, stderr) => {
-        if (err) {
-          throw err;
-        }
-      
-        data = stdout;
+    console.log("Started")
+    let pythonProcess = window.spawn('Python/python', args);
+
+    pythonProcess.stdout.on('data', (d) => {
+        data += d.toString();
+    })
+
+    // Handle error output
+    pythonProcess.stderr.on('data', (d) => {
+        console.log(uint8arrayToString(d));
     });
 
     pythonProcess.on('close', () => {
 
-    
         if (data === null){
             console.log("output of python script is empty")
             console.log(pyOut)
@@ -100,9 +103,8 @@ document.getElementById("plotData").addEventListener("click", () => {
     
         else {
     
-            data = data.toString()
-    
             data = data.match(/([\d.]+)/gm)
+            
             if(data != null) {
     
             
@@ -117,8 +119,8 @@ document.getElementById("plotData").addEventListener("click", () => {
                 );
               }
 
-              let r = 4 / Math.floor(Math.max(data[0], data[1]) / 100)
-    
+              let r = 4 / Math.max(1, Math.floor(Math.max(data[0], data[1]) / 100))
+
               svg.selectAll("circle").remove();
               svg.selectAll("circle")
               .data(points)
@@ -181,10 +183,8 @@ document.getElementById("plotData").addEventListener("click", () => {
 })
 
 document.getElementById("savePlot").addEventListener("click", () => {
-    let directory = window.dialog.showSaveDialogSync()
-
     var config = {
-        filename: 'customFileName',
+        filename: 'image',
       }
     d3_save_svg.save(d3.select('svg').node(), config);
 })

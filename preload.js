@@ -2,7 +2,7 @@
 // It has the same sandbox as a Chrome extension.
 
 window.d3 = require("d3");
-window.execFile = require('child_process').execFile;
+window.spawn = require('child_process').spawn;
 window.dialog = require('electron').remote.dialog;
 window.d3_save_svg = require('d3-save-svg');
 // window.addEventListener('DOMContentLoaded', () => {
